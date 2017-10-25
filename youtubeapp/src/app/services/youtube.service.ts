@@ -26,11 +26,15 @@ export class YoutubeService {
     params.set('playlistId', 'UUMIb8--yPdP32qOiyZXG-eg');
     params.set('key', this.apiKey);
 
+    if( this.nextPageTocken != "" ){
+      params.set('pageToken', this.nextPageTocken);
+    }
+
     // llamada al http pasandole la url y los parametros
     return this.http.get(this.youtubeUrl, {search: params})
       .map( res => {
       console.log(res.json());
-      this.nextPageTocken = res.json().nextPageTocken;
+      this.nextPageTocken = res.json().nextPageToken;
 
       // se crea un arreglo con todos los snippet de la respuesta a la llamada http, cada snippet tiene un video
       let videos:any = [];
